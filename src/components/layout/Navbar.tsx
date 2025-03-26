@@ -452,13 +452,19 @@ const Navbar = ({
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">UI/UX Design</Link>
+                <Link href="/services/product_design#uiux_design">
+                  UI/UX Design
+                </Link>
               </li>
               <li>
-                <Link href="#">Web Design</Link>
+                <Link href="/services/product_design#web_design">
+                  Web Design
+                </Link>
               </li>
               <li>
-                <Link href="#">Computer-Aided Design (CAD)</Link>
+                <Link href="/services/product_design#cad">
+                  Computer-Aided Design (CAD)
+                </Link>
               </li>
             </ul>
           </div>
