@@ -14,7 +14,7 @@ const CoverSection = ({
   <div
     className="blog-cover flex items-center justify-center relative"
     style={{
-      backgroundImage: `linear-gradient(rgba(43, 35, 41, 0.8), rgba(64, 63, 61, 0.8)), url(${backgroundImage})`,
+      backgroundImage: `linear-gradient(rgba(43, 35, 41, 0.8), rgba(28, 79, 156, 0.8)), url(${backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       height: "45vh",

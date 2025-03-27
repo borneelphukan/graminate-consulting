@@ -113,7 +113,7 @@ const Navbar = ({
                 onMouseEnter={() => handleBannerToggle("industries")}
                 className="relative"
                 onClick={() => {
-                  navigateTo("/services#industries");
+                  navigateTo("/industries");
                 }}
               >
                 <button className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none">
@@ -383,6 +383,17 @@ const Navbar = ({
                         <Link href="#"> Stock Trading Platforms</Link>
                       </li>
                     </ul>
+                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
+                      Entertainment
+                    </h3>
+                    <ul className="mt-2 space-y-1 text-left">
+                      <li>
+                        <Link href="#">Data Streaming</Link>
+                      </li>
+                      <li>
+                        <Link href="#"> Music & Cultural Platforms</Link>
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -583,6 +594,20 @@ const Navbar = ({
               </li>
               <li>
                 <Link href="#">Infrastructure & Urban Development</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
+              Entertainment
+            </h3>
+            <ul className="mt-2 space-y-2 text-sm">
+              
+              <li>
+                <Link href="#">Data Streaming</Link>
+              </li>
+              <li>
+                <Link href="#">Music & Cultural Platforms</Link>
               </li>
             </ul>
           </div>

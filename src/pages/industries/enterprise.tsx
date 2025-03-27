@@ -3,8 +3,8 @@ import Head from "next/head";
 import CoverSection from "@/components/sections/ServiceCover";
 import ContentSection from "@/components/sections/ServiceContent";
 
-export default function SoftwareDevelopment() {
-  const coverImage = "/services/sd_software_development.png";
+export default function Enterprise() {
+  const coverImage = "/images/company/software_development.avif";
 
   return (
     <>
