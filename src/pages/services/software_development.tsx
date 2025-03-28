@@ -28,7 +28,7 @@ export default function SoftwareDevelopment() {
                 title="Web Applications"
                 paragraphs={[
                   "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
-                  "We develop web applications across domains like HealthCare, FinTech, EdTech, Entertainment, and lots more.",
+                  "We develop web applications across domains like HealthCare, FinTech, EdTech, and lots more.",
                 ]}
                 listItems={[
                   "Responsive mobile-first, tested and secured web applications and websites.",

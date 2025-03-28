@@ -41,15 +41,9 @@ export default function Industries() {
         "Secure, scalable cloud infrastructure tailored to your business needs.",
       link: "/industries/education",
     },
+
     {
       id: 5,
-      title: "Entertainment",
-      description:
-        "Secure, scalable cloud infrastructure tailored to your business needs.",
-      link: "/industries/entertainment",
-    },
-    {
-      id: 6,
       title: "Public Sector",
       description:
         "Secure, scalable cloud infrastructure tailored to your business needs.",
@@ -89,8 +83,7 @@ export default function Industries() {
                   2: "/industries/healthcare",
                   3: "/industries/finance",
                   4: "/industries/education",
-                  5: "/industries/entertainment",
-                  6: "/industries/public_sector",
+                  5: "/industries/public_sector",
                 };
 
                 return (

@@ -339,18 +339,29 @@ const Navbar = ({
                 {isIndustriesOpen && (
                   <div className="mt-2 bg-gray-700 p-4 rounded">
                     <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Enterprise
+                      <Link href="/industries/enterprise">Enterprise</Link>
                     </h3>
 
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">E-Commerce Platforms</Link>
+                        <Link href="/industries/enterprise#erp">
+                          Enterprise Resource Planning (ERP)
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">CRM / ERP & Logistic Platforms</Link>
+                        <Link href="/industries/enterprise#crm">
+                          Customer Relationship Management (CRM)
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">HR Management Platforms</Link>
+                        <Link href="/industries/enterprise#e-commerce">
+                          E-Commerce Platforms
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/industries/enterprise#saas">
+                          Other SaaS Platforms
+                        </Link>
                       </li>
                     </ul>
                     <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase text-left mt-4">
@@ -361,38 +372,54 @@ const Navbar = ({
                         <Link href="#">Fitness & Nutrition</Link>
                       </li>
                       <li>
-                        <Link href="#">Hospital Management Systems</Link>
+                        <Link href="#">
+                          Clinical, Pharmaceutical & Hospital Management
+                          Platforms
+                        </Link>
                       </li>
                       <li>
                         <Link href="#">Softwares for Doctors</Link>
                       </li>
                     </ul>
                     <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Finance
+                      <Link href="/industries/finance">Finance</Link>
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">Personal Finance & Budgeting</Link>
+                        <Link href="/industries/finance#investment_trading">
+                          Investment & Trading Platforms
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Wealth Management Platforms</Link>
+                        <Link href="/industries/finance#insurance">
+                          Insurance Platforms
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#"> Stock Trading Platforms</Link>
+                        <Link href="/industries/finance#personal_finance">
+                          Personal Finance & Budgeting
+                        </Link>
                       </li>
                     </ul>
                     <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Education
+                      <Link href="/industries/education">Education</Link>
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">Customized Learning Platforms</Link>
+                        <Link href="/industries/education#institution-management">
+                          Institutional Management Systems
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Exam Preparation Platforms</Link>
+                        <Link href="/industries/education#learning_teaching">
+                          Learning & Teaching Platforms
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Digital Library Platforms</Link>
+                        <Link href="/industries/education#exam-platforms">
+                          {" "}
+                          Exam Preparation Platforms
+                        </Link>
                       </li>
                     </ul>
                     <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
@@ -407,17 +434,6 @@ const Navbar = ({
                       </li>
                       <li>
                         <Link href="#"> Stock Trading Platforms</Link>
-                      </li>
-                    </ul>
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Entertainment
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="#">Data Streaming</Link>
-                      </li>
-                      <li>
-                        <Link href="#"> Music & Cultural Platforms</Link>
                       </li>
                     </ul>
                   </div>
@@ -560,62 +576,86 @@ const Navbar = ({
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">E-Commerce Platforms</Link>
+                <Link href="/industries/enterprise#erp">
+                  Enterprise Resource Planning (ERP)
+                </Link>
               </li>
               <li>
-                <Link href="#">CRM / ERP & Logistic Platforms</Link>
+                <Link href="/industries/enterprise#crm">
+                  Customer Relationship Management (CRM)
+                </Link>
               </li>
               <li>
-                <Link href="#">HR Management Platforms</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Healthcare
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="#">Fitness & Nutrition</Link>
-              </li>
-              <li>
-                <Link href="#">Hospital Management Systems</Link>
-              </li>
-              <li>
-                <Link href="#">Softwares for Doctors</Link>
+                <Link href="/industries/enterprise#saas">
+                  Other SaaS Platform
+                </Link>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Finance
+              <Link href="/industries/healthcare">Health Care</Link>
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">Personal Finance & Budgeting</Link>
+                <Link href="/industries/healthcare#fitness_nutrition">
+                  Fitness & Nutrition
+                </Link>
               </li>
               <li>
-                <Link href="#">Wealth Management Platforms</Link>
+                <Link href="/industries/healthcare#clinical-systems">
+                  Clinical, Pharma & Hospital Platforms
+                </Link>
               </li>
               <li>
-                <Link href="#">Trading Platforms</Link>
+                <Link href="/industries/healthcare#doctor_softwares">
+                  Softwares for Doctors
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
+              <Link href="/industries/finance">Finance</Link>
+            </h3>
+            <ul className="mt-2 space-y-2 text-sm">
+              <li>
+                <Link href="/industries/finance#investment_trading">
+                  Investment & Trading Platforms
+                </Link>
+              </li>
+              <li>
+                <Link href="/industries/finance#insurance">
+                  Insurance Platforms
+                </Link>
+              </li>
+              <li>
+                <Link href="/industries/finance#personal_finance">
+                  Personal Finance & Budgeting
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Education
+              <Link href="/industries/education">Education</Link>
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">Customized Learning Platforms</Link>
+                <Link href="/industries/education#institution-management">
+                  Institutional Management System
+                </Link>
               </li>
               <li>
-                <Link href="#">Exam Preparation Platforms</Link>
+                <Link href="/industries/education#learning_teaching">
+                  Learning & Teaching Platforms
+                </Link>
               </li>
               <li>
-                <Link href="#">Digital Library Platforms</Link>
+                <Link href="/industries/education#exam-platforms">
+                  Exam Preparation Platforms
+                </Link>
               </li>
             </ul>
           </div>
@@ -632,19 +672,6 @@ const Navbar = ({
               </li>
               <li>
                 <Link href="#">Infrastructure & Urban Development</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Entertainment
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="#">Data Streaming</Link>
-              </li>
-              <li>
-                <Link href="#">Music & Cultural Platforms</Link>
               </li>
             </ul>
           </div>
