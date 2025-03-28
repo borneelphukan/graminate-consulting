@@ -1,4 +1,4 @@
-import ServiceLayout from "@/layout/ServiceLayout";
+import DefaultLayout from "@/layout/DefaultLayout";
 import Head from "next/head";
 import CoverSection from "@/components/sections/ServiceCover";
 import ContentSection from "@/components/sections/ServiceContent";
@@ -12,7 +12,7 @@ export default function SoftwareDevelopment() {
         <title>Graminate | Software Development</title>
       </Head>
 
-      <ServiceLayout>
+      <DefaultLayout>
         <CoverSection
           backgroundImage={coverImage}
           title="Software Development"
@@ -105,7 +105,7 @@ export default function SoftwareDevelopment() {
             </div>
           </div>
         </div>
-      </ServiceLayout>
+      </DefaultLayout>
     </>
   );
 }

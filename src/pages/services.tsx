@@ -21,19 +21,19 @@ export default function Services() {
       id: 2,
       title: "Product Design",
       description:
-        "Streamline operations and boost efficiency with our proven process enhancement methodologies.",
+        "Experience the full potential of your ideas with our product designing team. Our team specializes in turning concepts into functional, user-centric digital products that are intuitive and scalable.",
     },
     {
       id: 3,
       title: "IT Operations",
       description:
-        "Cloud migration, deployment, infrastructure management, CI/CD pipelines, containerization, and automation.",
+        "From integrating and managing critical business IT infrastructure, monitoring system performances, and migrating your business to the cloud and more, we ensure that your IT systems never fail.",
     },
     {
       id: 4,
       title: "Technology Enablement",
       description:
-        "Security audits, penetration testing, data protection, IT support, and maintenance to ensure system security and performance.",
+        "Wondering how to organize and get started with your IT project or lay the foundations of your business’s digital systems? Our experts in project management and IT strategies have covered you.",
     },
   ];
 
@@ -49,7 +49,7 @@ export default function Services() {
           <div id="services">
             <div className="text-center mb-20 pt-10">
               <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-5xl">
-                <span className="block ">Transform Your Business</span>
+                <span className="block ">Affordable & Quality IT Solutions </span>
                 <p className="mx-auto max-w-3xl my-4 text-xl font-medium text-dark">
                   Our teams provide end-to-end IT solutions in Software
                   Development, Product Design, IT Operations and Technology

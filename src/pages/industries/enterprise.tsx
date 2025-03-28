@@ -1,4 +1,4 @@
-import ServiceLayout from "@/layout/ServiceLayout";
+import DefaultLayout from "@/layout/DefaultLayout";
 import Head from "next/head";
 import CoverSection from "@/components/sections/ServiceCover";
 import ContentSection from "@/components/sections/ServiceContent";
@@ -9,13 +9,13 @@ export default function Enterprise() {
   return (
     <>
       <Head>
-        <title>Graminate | Software Development</title>
+        <title>Industries | Enterprise</title>
       </Head>
 
-      <ServiceLayout>
+      <DefaultLayout>
         <CoverSection
           backgroundImage={coverImage}
-          title="Software Development"
+          title="Enterprises"
           subtitle="At Graminate, our team of experienced software developers turn your ideas and requirements into high-quality, secured software applications explicitly tailored to digitalize your business and contribute to your long-term profits"
         />
 
@@ -105,7 +105,7 @@ export default function Enterprise() {
             </div>
           </div>
         </div>
-      </ServiceLayout>
+      </DefaultLayout>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import ContentSection from "@/components/sections/ServiceContent";
 import CoverSection from "@/components/sections/ServiceCover";
-import ServiceLayout from "@/layout/ServiceLayout";
+import DefaultLayout from "@/layout/DefaultLayout";
 import Head from "next/head";
 
 export default function ITOperations() {
@@ -12,7 +12,7 @@ export default function ITOperations() {
         <title>Graminate | IT Operations</title>
       </Head>
 
-      <ServiceLayout>
+      <DefaultLayout>
         <CoverSection
           backgroundImage={coverImage}
           title="IT Operations"
@@ -23,58 +23,66 @@ export default function ITOperations() {
         <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto space-y-16">
             {/* Integration & Automations Section */}
-            <ContentSection
-              imageSrc="/services/it_integration_automation.png"
-              alt="Integration & Automation"
-              title="Integration & Automation"
-              paragraphs={[
-                "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
-              ]}
-              listItems={[
-                "Responsive mobile-first, tested and secured web applications and websites.",
-                "Dynamic web apps with modern design, customized for your business needs.",
-                "Personalized or event-based websites for you or your business.",
-                "Integrated custom admin dashboards for more control.",
-                "24 x 7 Support for all the systems developed by us.",
-              ]}
-            />
-            <ContentSection
-              imageSrc="/services/it_monitoring_logging.png"
-              alt="Monitoring & Logging"
-              title="Monitoring & Logging"
-              paragraphs={[
-                "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
-              ]}
-              listItems={[
-                "Responsive mobile-first, tested and secured web applications and websites.",
-                "Dynamic web apps with modern design, customized for your business needs.",
-                "Personalized or event-based websites for you or your business.",
-                "Integrated custom admin dashboards for more control.",
-                "24 x 7 Support for all the systems developed by us.",
-              ]}
-              reverse={true}
-            />
+            <div id="integration_automation">
+              <ContentSection
+                imageSrc="/services/it_integration_automation.png"
+                alt="Integration & Automation"
+                title="Integration & Automation"
+                paragraphs={[
+                  "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
+                ]}
+                listItems={[
+                  "Responsive mobile-first, tested and secured web applications and websites.",
+                  "Dynamic web apps with modern design, customized for your business needs.",
+                  "Personalized or event-based websites for you or your business.",
+                  "Integrated custom admin dashboards for more control.",
+                  "24 x 7 Support for all the systems developed by us.",
+                ]}
+              />
+            </div>
 
-            {/* Mobile Applications Section */}
-            <ContentSection
-              imageSrc="/services/it_cloud.png"
-              alt="Monitoring & Logging"
-              title="Monitoring & Logging"
-              paragraphs={[
-                "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
-              ]}
-              listItems={[
-                "Responsive mobile-first, tested and secured web applications and websites.",
-                "Dynamic web apps with modern design, customized for your business needs.",
-                "Personalized or event-based websites for you or your business.",
-                "Integrated custom admin dashboards for more control.",
-                "24 x 7 Support for all the systems developed by us.",
-              ]}
-              reverse={true}
-            />
+            {/* Monitoring & Logging Section */}
+            <div id="monitoring_logging">
+              <ContentSection
+                imageSrc="/services/it_monitoring_logging.png"
+                alt="Monitoring & Logging"
+                title="Monitoring & Logging"
+                paragraphs={[
+                  "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
+                ]}
+                listItems={[
+                  "Responsive mobile-first, tested and secured web applications and websites.",
+                  "Dynamic web apps with modern design, customized for your business needs.",
+                  "Personalized or event-based websites for you or your business.",
+                  "Integrated custom admin dashboards for more control.",
+                  "24 x 7 Support for all the systems developed by us.",
+                ]}
+                reverse={true}
+              />
+            </div>
+
+            {/* Cloud & Infrastructure Management Section */}
+            <div id="cloud">
+              <ContentSection
+                imageSrc="/services/it_cloud.png"
+                alt="Cloud & Infrastructure Management"
+                title="Cloud & Infrastructure Management"
+                paragraphs={[
+                  "Our team of designers and developers develop your web applications using the most modern frameworks with a mobile-first approach. Our web applications are responsive by default, SEO-optimized, and load at lightning speed.",
+                ]}
+                listItems={[
+                  "Responsive mobile-first, tested and secured web applications and websites.",
+                  "Dynamic web apps with modern design, customized for your business needs.",
+                  "Personalized or event-based websites for you or your business.",
+                  "Integrated custom admin dashboards for more control.",
+                  "24 x 7 Support for all the systems developed by us.",
+                ]}
+                reverse={true}
+              />
+            </div>
           </div>
         </div>
-      </ServiceLayout>
+      </DefaultLayout>
     </>
   );
 }

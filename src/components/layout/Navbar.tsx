@@ -238,16 +238,24 @@ const Navbar = ({
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">Web Applications</Link>
+                        <Link href="/services/software_development#web-application">
+                          Web Applications
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Enterprise Softwares</Link>
+                        <Link href="/services/software_development#enterprise-application">
+                          Enterprise Softwares
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Mobile Applications</Link>
+                        <Link href="/services/software_development#mobile-application">
+                          Mobile Applications
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Cloud Applications</Link>
+                        <Link href="/services/software_development#cloud-application">
+                          Cloud Applications
+                        </Link>
                       </li>
                     </ul>
 
@@ -256,13 +264,19 @@ const Navbar = ({
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">UI/UX Design</Link>
+                        <Link href="/services/product_design#uiux_design">
+                          UI/UX Design
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Web Design</Link>
+                        <Link href="/services/product_design#web_design">
+                          Web Design
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Computer-Aided Design (CAD)</Link>
+                        <Link href="/services/product_design#cad">
+                          Computer-Aided Design (CAD)
+                        </Link>
                       </li>
                     </ul>
 
@@ -271,13 +285,19 @@ const Navbar = ({
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">Integration & Automations</Link>
+                        <Link href="/services/it_operations#integration_automation">
+                          Integration & Automations
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Monitor & Logging</Link>
+                        <Link href="/services/it_operations#monitoring_logging">
+                          Monitor & Logging
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Cloud & Infrastructure Management</Link>
+                        <Link href="/services/it_operations#cloud">
+                          Cloud & Infrastructure Management
+                        </Link>
                       </li>
                     </ul>
 
@@ -286,13 +306,19 @@ const Navbar = ({
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="#">IT Strategy & Architecture</Link>
+                        <Link href="/services/tech_consulting#it_strategy">
+                          IT Strategy & Architecture
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Project Managmenent</Link>
+                        <Link href="/services/tech_consulting#project_management">
+                          Project Managmenent
+                        </Link>
                       </li>
                       <li>
-                        <Link href="#">Mobile App Testing</Link>
+                        <Link href="/services/tech_consulting#design_consulting">
+                          Design Consulting
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -485,13 +511,19 @@ const Navbar = ({
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">Integration & Automations</Link>
+                <Link href="/services/it_operations#integration_automation">
+                  Integration & Automations
+                </Link>
               </li>
               <li>
-                <Link href="#">Monitor & Logging</Link>
+                <Link href="/services/it_operations#monitoring_logging">
+                  Monitor & Logging
+                </Link>
               </li>
               <li>
-                <Link href="#">Cloud & Infrastructure Management</Link>
+                <Link href="/services/it_operations#cloud">
+                  Cloud & Infrastructure Management
+                </Link>
               </li>
             </ul>
           </div>
@@ -501,13 +533,19 @@ const Navbar = ({
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="#">IT Strategy & Architecture</Link>
+                <Link href="/services/tech_consulting#it_strategy">
+                  IT Strategy & Architecture
+                </Link>
               </li>
               <li>
-                <Link href="#">Project Managmenent</Link>
+                <Link href="/services/tech_consulting#project_management">
+                  Project Managmenent
+                </Link>
               </li>
               <li>
-                <Link href="#">Design Consulting</Link>
+                <Link href="/services/tech_consulting#design_consulting">
+                  Design Consulting
+                </Link>
               </li>
             </ul>
           </div>
@@ -518,7 +556,7 @@ const Navbar = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-800">
           <div>
             <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Enterprise
+              <Link href="/industries/enterprise">Enterprise</Link>
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
@@ -602,7 +640,6 @@ const Navbar = ({
               Entertainment
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
-              
               <li>
                 <Link href="#">Data Streaming</Link>
               </li>

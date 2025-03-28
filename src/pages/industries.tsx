@@ -1,4 +1,4 @@
-import ServiceLayout from "@/layout/ServiceLayout";
+import DefaultLayout from "@/layout/DefaultLayout";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -63,7 +63,7 @@ export default function Industries() {
         <title>Graminate | Industries</title>
       </Head>
 
-      <ServiceLayout>
+      <DefaultLayout>
         <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div id="industries">
@@ -117,7 +117,7 @@ export default function Industries() {
             </div>
           </div>
         </div>
-      </ServiceLayout>
+      </DefaultLayout>
     </>
   );
 }

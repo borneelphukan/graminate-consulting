@@ -1,6 +1,6 @@
 import ContentSection from "@/components/sections/ServiceContent";
 import CoverSection from "@/components/sections/ServiceCover";
-import ServiceLayout from "@/layout/ServiceLayout";
+import DefaultLayout from "@/layout/DefaultLayout";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -12,12 +12,12 @@ export default function ProductDesign() {
       <Head>
         <title>Graminate | Design Development</title>
       </Head>
-      <ServiceLayout>
+      <DefaultLayout>
         {/* Cover Section */}
         <CoverSection
           backgroundImage={coverImage}
-          title="Product Development"
-          subtitle="At Graminate, our team of experienced software developers turn your ideas and requirements into high-quality, secured software applications explicitly tailored to digitalize your business and contribute to your long-term profits"
+          title="Product Design"
+          subtitle="Our team of product designing experts work together tirelessly to turn your business ideas into working prototypes that provide the whole native experience of your digital product when its published."
         />
 
         {/* Content Section */}
@@ -93,7 +93,7 @@ export default function ProductDesign() {
             </div>
           </div>
         </div>
-      </ServiceLayout>
+      </DefaultLayout>
     </>
   );
 }
