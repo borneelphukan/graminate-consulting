@@ -1,21 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import pool from "../../../config/database";
-import multer from "multer";
-import path from "path";
+// import multer from "multer";
+// import path from "path";
 import { createRouter } from "next-connect";
 import cors, { runMiddleware } from "../../../lib/corsMiddleware";
 import type { Request } from "express";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/uploads/");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname));
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   file?: Express.Multer.File;
@@ -24,18 +24,18 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 
 const router = createRouter<ExtendedNextApiRequest, NextApiResponse>();
 
-router.use((req, res, next) => {
-  upload.single("cvFile")(
-    req as unknown as Request,
-    res as any,
-    (err?: unknown) => {
-      if (err instanceof Error) {
-        return res.status(500).json({ error: "File upload error" });
-      }
-      next();
-    }
-  );
-});
+// router.use((req, res, next) => {
+//   upload.single("cvFile")(
+//     req as unknown as Request,
+//     res as any,
+//     (err?: unknown) => {
+//       if (err instanceof Error) {
+//         return res.status(500).json({ error: "File upload error" });
+//       }
+//       next();
+//     }
+//   );
+// });
 
 router.post(async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
   await runMiddleware(req, res, cors);
