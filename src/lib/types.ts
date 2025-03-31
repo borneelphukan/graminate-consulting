@@ -15,16 +15,15 @@ export type ContactErrors = {
   message: string;
 };
 
-// Careers
-export type Job = {
-  id: number;
+export type Jobs = {
   position: string;
   type: string;
   mode: string;
   description: string;
-  tasks: string[];
-  requirements: string[];
-  benefits: string[];
+  tasks?: string[];
+  requirements?: string[];
+  benefits?: string[];
+  jobpost: string;
 };
 
 export const reasonsForJoining = [

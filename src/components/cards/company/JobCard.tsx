@@ -10,8 +10,8 @@ interface JobCardProps {
   tasks?: string[];
   requirements?: string[];
   benefits?: string[];
+  jobpost: string;
 }
-
 const JobCard: React.FC<JobCardProps> = ({
   position,
   type,
@@ -20,19 +20,24 @@ const JobCard: React.FC<JobCardProps> = ({
   tasks = [],
   requirements = [],
   benefits = [],
+  jobpost,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const applyForJob = () => {
-    const formattedPosition = position.toLowerCase().replace(/\s+/g, "-");
-    const formattedType = type.toLowerCase().replace(/\s+/g, "-");
-    const formattedMode = mode.toLowerCase().replace(/\s+/g, "-");
-
-    router.push(
-      `/company/${formattedPosition}?type=${formattedType}&mode=${formattedMode}`
-    );
+    window.open(jobpost, "_blank");
   };
+
+  // const applyForJob = () => {
+  //   const formattedPosition = position.toLowerCase().replace(/\s+/g, "-");
+  //   const formattedType = type.toLowerCase().replace(/\s+/g, "-");
+  //   const formattedMode = mode.toLowerCase().replace(/\s+/g, "-");
+
+  //   router.push(
+  //     `/company/${formattedPosition}?type=${formattedType}&mode=${formattedMode}`
+  //   );
+  // };
 
   return (
     <div className="flex flex-col rounded-lg bg-white p-6 shadow-md">

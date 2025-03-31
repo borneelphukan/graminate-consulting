@@ -1,41 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Head from "next/head";
 import FeatureCard from "@/components/cards/company/FeatureCard";
 import JobCard from "@/components/cards/company/JobCard";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import { Job } from "@/lib/types";
 import { reasonsForJoining, companyFeatures } from "@/lib/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
+import { Jobs } from "@/lib/types";
+
+const jobs: Jobs[] = [
+  {
+    position: "Frontend Developer",
+    type: "Full-time",
+    mode: "Remote",
+    description:
+      "Join our frontend team to build responsive user interfaces using React, TailwindCSS, and TypeScript.",
+    tasks: [
+      "Develop new UI features and components",
+      "Collaborate with designers and backend developers",
+      "Write clean, testable code",
+    ],
+    requirements: [
+      "2+ years experience with React and TypeScript",
+      "Familiarity with REST APIs",
+      "Good understanding of responsive design",
+    ],
+    benefits: [
+      "Fully remote team",
+      "Flexible working hours",
+      "Annual learning budget",
+    ],
+    jobpost: "https://www.linkedin.com/jobs/view/frontend-developer-123456",
+  },
+];
+
 const Careers = () => {
-  const [jobs, setJobs] = useState<Job[]>([]);
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await fetch("/api/jobs/jobs/");
-        const data = await res.json();
-        if (res.ok && Array.isArray(data.jobs)) {
-          setJobs(data.jobs);
-        } else {
-          console.error("Failed to fetch jobs:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
-    fetchJobs();
-  }, []);
-
   return (
     <>
       <Head>
         <title>Graminate | Careers</title>
       </Head>
       <Navbar contact />
+
       {/* Header */}
       <div className="relative bg-light">
         <div className="relative isolate overflow-hidden pt-1">
@@ -101,8 +109,8 @@ const Careers = () => {
           <div className="mx-auto max-w-5xl">
             {jobs.length > 0 ? (
               <div className="mt-10 grid gap-6">
-                {jobs.map((job) => (
-                  <JobCard key={job.id} {...job} />
+                {jobs.map((job, index) => (
+                  <JobCard key={index} {...job} />
                 ))}
               </div>
             ) : (

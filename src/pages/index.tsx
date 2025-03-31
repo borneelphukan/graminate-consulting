@@ -172,10 +172,10 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-8 md:px-10 py-10">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3">
-              Project Lifecycle
+              How We Approach Projects
             </h2>
             <p className="text-dark text-sm sm:text-base md:text-lg max-w-lg mx-auto mb-6">
-              Whether its a development-only or maintainance included, we ensure
+              We ensure
               complete transparency and adherence to deadline while developing
               your product
             </p>

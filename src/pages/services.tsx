@@ -21,52 +21,19 @@ export default function Services() {
       id: 2,
       title: "Product Design",
       description:
-        "Streamline operations and boost efficiency with our proven process enhancement methodologies.",
+        "Experience the full potential of your ideas with our product designing team. Our team specializes in turning concepts into functional, user-centric digital products that are intuitive and scalable.",
     },
     {
       id: 3,
       title: "IT Operations",
       description:
-        "Cloud migration, deployment, infrastructure management, CI/CD pipelines, containerization, and automation.",
+        "From integrating and managing critical business IT infrastructure, monitoring system performances, and migrating your business to the cloud and more, we ensure that your IT systems never fail.",
     },
     {
       id: 4,
       title: "Technology Enablement",
       description:
-        "Security audits, penetration testing, data protection, IT support, and maintenance to ensure system security and performance.",
-    },
-  ];
-
-  const industries: Service[] = [
-    {
-      id: 1,
-      title: "Enterprise",
-      description:
-        "Secure, scalable cloud infrastructure tailored to your business needs.",
-    },
-    {
-      id: 2,
-      title: "Healthcare",
-      description:
-        "Streamline operations and boost efficiency with our proven process enhancement methodologies.",
-    },
-    {
-      id: 3,
-      title: "Finance",
-      description:
-        "Harness the power of intelligent automation to reduce costs and accelerate productivity.",
-    },
-    {
-      id: 4,
-      title: "Education",
-      description:
-        "Secure, scalable cloud infrastructure tailored to your business needs.",
-    },
-    {
-      id: 5,
-      title: "Public Sector",
-      description:
-        "Secure, scalable cloud infrastructure tailored to your business needs.",
+        "Wondering how to organize and get started with your IT project or lay the foundations of your business’s digital systems? Our experts in project management and IT strategies have covered you.",
     },
   ];
 
@@ -82,7 +49,7 @@ export default function Services() {
           <div id="services">
             <div className="text-center mb-20 pt-10">
               <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-5xl">
-                <span className="block ">Transform Your Business</span>
+                <span className="block ">Affordable & Quality IT Solutions </span>
                 <p className="mx-auto max-w-3xl my-4 text-xl font-medium text-dark">
                   Our teams provide end-to-end IT solutions in Software
                   Development, Product Design, IT Operations and Technology
@@ -99,6 +66,7 @@ export default function Services() {
                 2: "/services/product_design",
                 3: "/services/it_operations",
                 4: "/services/tech_consulting",
+                5: "/services/public_sector",
               };
 
               return (
@@ -122,43 +90,6 @@ export default function Services() {
                 </div>
               );
             })}
-          </div>
-
-          <div id="industries">
-            <div className="text-center my-20 pt-10">
-              <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-5xl">
-                <span className="block mx-auto max-w-5xl">
-                  Softwares tailored specifically for your industry and your
-                  business
-                </span>
-                <p className="mx-auto max-w-3xl my-4 text-xl font-medium text-dark">
-                  Our expertise in digital solutions spans across industries,
-                  equipping us to turn complex business requirements into
-                  streamlined, scalable, and future-ready software solutions
-                </p>
-              </h1>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {industries.map((service) => (
-              <div
-                key={service.id}
-                className={`p-8 rounded-2xl bg-light transition-all duration-300 hover:shadow-xl hover:-translate-y-2`}
-              >
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
-                <div className="mt-6">
-                  <button className="text-green-200 font-semibold hover:text-green-100 transition-colors">
-                    Learn More →
-                  </button>
-                </div>
-              </div>
-            ))}
           </div>
 
           <div className="mt-20 text-center">
