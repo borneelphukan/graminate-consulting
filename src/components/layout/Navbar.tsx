@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Banner from "./Banner";
+import { Transition } from "@headlessui/react";
 
 type Props = {
   imageSrc?: string;
@@ -209,7 +210,15 @@ const Navbar = ({
           </div>
 
           {/* Mobile Menu */}
-          {isMobileMenuOpen && (
+          <Transition
+            show={isMobileMenuOpen}
+            enter="transition-all duration-300 ease-out"
+            enterFrom="opacity-0 transform -translate-y-4"
+            enterTo="opacity-100 transform translate-y-0"
+            leave="transition-all duration-300 ease-in"
+            leaveFrom="opacity-100 transform translate-y-0"
+            leaveTo="opacity-0 transform -translate-y-4"
+          >
             <div className="mt-2 space-y-2 py-4 text-center text-white md:hidden">
               {signIn && (
                 <Link
@@ -460,7 +469,7 @@ const Navbar = ({
                 </div>
               )}
             </div>
-          )}
+          </Transition>
         </div>
       </header>
 
