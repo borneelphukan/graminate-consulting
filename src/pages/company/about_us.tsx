@@ -7,13 +7,17 @@ import Image from "next/image";
 const teamMembers = [
   {
     avatar: "/images/people/borneel.png",
-    name: "Borneel Bikash Phukan",
+    name: "Borneel B. Phukan",
     role: "CEO / CTO",
     description:
-      "Web Developer with 3+ years of experience in building scalable web applications with robust backend infrastructures.",
-    linkedin: "https://www.linkedin.com/in/borneelphukan/",
-    github: "https://github.com/borneelphukan",
-    website: "https://borneelphukan.com/",
+      "Leading Graminate's strategic and technical innovation, ensuring the delivery of impactful, client-focused software solutions ",
+  },
+  {
+    avatar: "/images/people/lisa.png",
+    name: "Lisa N. Klinnert",
+    role: "Human Resources",
+    description:
+      "Chief of Human Resources with years of expertise in the medical science and medical technology sector. ",
   },
 ];
 
@@ -121,12 +125,12 @@ export default function AboutUs() {
               </div>
               <div className="lg:flex lg:flex-auto lg:justify-center">
                 <dl className="w-64 space-y-8 xl:w-80">
-                  <div className="flex flex-col-reverse gap-y-4">
-                    <dt className="text-base/7 text-gray-600">
-                      Supporting farmers and workers directly or indirectly
+                  <div className="flex flex-col-reverse gap-y-3">
+                    <dt className="text-base text-dark">
+                      Active Employees and Interns
                     </dt>
                     <dd className="text-5xl font-semibold tracking-tight text-gray-900">
-                      30,000
+                      40
                     </dd>
                   </div>
                   <div className="flex flex-col-reverse gap-y-4">
@@ -142,7 +146,7 @@ export default function AboutUs() {
                       Active Clients
                     </dt>
                     <dd className="text-5xl font-semibold tracking-tight text-gray-900">
-                      12
+                      2
                     </dd>
                   </div>
                 </dl>
@@ -312,9 +316,6 @@ export default function AboutUs() {
                     name={member.name}
                     role={member.role}
                     description={member.description}
-                    linkedin={member.linkedin}
-                    github={member.github}
-                    website={member.website}
                   />
                 </li>
               ))}

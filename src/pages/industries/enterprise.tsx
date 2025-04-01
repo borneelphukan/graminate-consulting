@@ -82,7 +82,7 @@ export default function Enterprise() {
               />
             </div>
 
-            <div id="other-saas">
+            <div id="saas">
               <ContentSection
                 imageSrc="/industries/en-saas.png"
                 alt="Other Vertical SaaS"
