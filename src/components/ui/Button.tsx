@@ -35,7 +35,7 @@ const Button = ({
   const getButtonClass = (): string => {
     switch (style) {
       case "home":
-        return "bg-white text-gray-200 text-sm my-10 py-3 px-7 rounded-md shadow-lg hover:bg-black hover:text-white border border-solid border-black";
+        return "bg-white text-gray-200 text-sm my-10 py-3 px-7 rounded-md shadow-lg hover:bg-gray-400 border border-solid border-gray-300";
       case "primary":
         return "bg-green-200 text-sm hover:bg-green-100 disabled:bg-gray-200 disabled:text-gray-400 disabled:opacity-50 text-white justify-center";
       case "secondary":

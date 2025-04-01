@@ -77,7 +77,7 @@ export default function ITOperations() {
                   "Integrated custom admin dashboards for more control.",
                   "24 x 7 Support for all the systems developed by us.",
                 ]}
-                reverse={true}
+      
               />
             </div>
           </div>

@@ -43,12 +43,10 @@
   --color-dark-100: #28282c;
 }
 
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
-
 
 body {
   color: var(--foreground);
@@ -63,6 +61,10 @@ body {
   background-size: cover;
   background-position: center;
   background-blend-mode: darken;
+
+  will-change: transform;
+  transform-origin: center center;
+  transition: transform 0.01s ease-out;
 }
 
 .team-cover {

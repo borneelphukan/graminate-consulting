@@ -5,8 +5,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Services from "@/components/cards/company/PunchCard";
 import Button from "@/components/ui/Button";
-import FeatureBanner from "../../public/images/banners/features-banner.png";
-import { useState } from "react";
+import FeatureBannerImage from "../../public/images/banners/features-banner.png";
 import {
   faChevronCircleLeft,
   faChevronCircleRight,
@@ -17,17 +16,66 @@ import {
   faCompassDrafting,
   faRecycle,
   faCheck,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useRef, useEffect } from "react"; // Import useRef and useEffect
+
+type ProcessStep = {
+  step: string;
+  icon: IconDefinition;
+  title: string;
+  description: string;
+};
 
 export default function Home() {
   const router = useRouter();
+  const backgroundRef = useRef<HTMLDivElement>(null); // Create a ref for the background div
 
   const navigateTo = (url: string) => {
     router.push(url);
   };
 
-  const steps = [
+  // Add useEffect hook for scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (backgroundRef.current) {
+        const scrollY = window.scrollY;
+        // Adjust these values for sensitivity and max zoom
+        const maxScroll = window.innerHeight; // Zoom effect happens over the first screen height
+        const maxScale = 1.05; // Maximum zoom (5%)
+        const baseScale = 1; // Starting scale
+
+        // Calculate scale based on scroll position, capped at maxScale
+        const scale = Math.min(
+          baseScale + (scrollY / maxScroll) * (maxScale - baseScale),
+          maxScale
+        );
+
+        // Apply the scale transform
+        // Use requestAnimationFrame for potentially smoother performance
+        window.requestAnimationFrame(() => {
+          if (backgroundRef.current) {
+            backgroundRef.current.style.transform = `scale(${scale})`;
+          }
+        });
+      }
+    };
+
+    // Add listener
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Call once initially in case the page loads scrolled
+    handleScroll();
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  const steps: ProcessStep[] = [
+    // ... (keep steps array as is)
     {
       step: "1",
       icon: faList,
@@ -60,57 +108,55 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    }
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   return (
     <>
       <Head>
         <title>Graminate Global IT Solutions | Welcome</title>
+        <meta
+          name="description"
+          content="Pioneering scalable, cloud-based software solutions for small and medium-sized businesses. Driving digital transformation with affordable, high-quality services."
+        />
       </Head>
 
       <Navbar contact />
 
-      <main className="flex flex-col flex-grow">
-        {/* Banner Section */}
-        <div className="home-container bg-cover bg-center">
-          <div className="container mx-auto px-4 sm:px-8 md:px-20 py-12 md:py-24 lg:py-32">
-            <div className="max-w-7xl mx-auto text-center">
-              <h1 className="text-white font-semibold mb-2 text-sm sm:text-base md:text-lg">
+      <main className="flex flex-col flex-grow bg-white">
+        <div className="relative bg-gray-800 text-white overflow-hidden">
+          {/* Add the ref to this div */}
+          <div
+            ref={backgroundRef}
+            className="absolute inset-0 home-container bg-cover bg-center opacity-40"
+            // We will control transform via JS, transition via CSS
+          ></div>
+          {/* This div below is just for potential overlay/gradient effects, keep it */}
+          <div className="absolute inset-0 "></div>
+          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 md:py-40 lg:py-48">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-base sm:text-lg md:text-xl font-semibold text-green-300 uppercase tracking-wide">
                 Welcome to Graminate
               </h1>
-              <h2 className="text-white font-semibold mb-4 text-2xl sm:text-3xl md:text-5xl ">
-                Pioneering{" "}
-                <span className="font-semibold text-green-200 text-3xl sm:text-4xl md:text-6xl">
-                  cloud-based
-                </span>
+              <h2 className="mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+                Pioneering <span className="text-green-400">Cloud-Based</span>
               </h2>
-
-              <h3 className="text-white font-semibold mb-4 text-2xl sm:text-2xl md:text-5xl">
-                software solutions for
+              <h3 className="mt-1 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                Software Solutions
               </h3>
-              <h3 className="text-white font-semibold mb-4 text-xl sm:text-2xl md:text-4xl">
-                transforming your business
-              </h3>
-              <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6">
-                We are driving digital transformation for small and medium-sized
-                businesses, delivering affordable, high-quality services
-                tailored to an ever-evolving world. Through close collaboration
-                with our clients, we are pioneering scalable, cloud-based
-                software solutions to future-proof your business.
+              <p className="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
+                Driving digital transformation for SMBs with affordable,
+                high-quality, scalable cloud solutions tailored to future-proof
+                your business through close collaboration.
               </p>
-              <div className="flex justify-center">
+              <div className="mt-10 flex justify-center">
                 <Button
                   style="home"
-                  text="Contact Us"
+                  text="Get in Touch"
                   onClick={() => navigateTo("/company/contact_us")}
                 />
               </div>
@@ -118,153 +164,202 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Glimpse of Services */}
-        <div className="container mx-auto px-4 sm:px-8 md:px-16 -mt-32 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Services
-            icon={faBuilding}
-            title="Solutions for All Businesses"
-            content="We provide robust software solutions across the modern industries, fully customised to your request and always safe and secured under your control."
-          />
-          <Services
-            icon={faCode}
-            title="Robust Planning & Development"
-            content="A dedicated team awaits to serve your interest with utmost efficiency and build your fault-proof high performance software solutions. "
-          />
-          <Services
-            icon={faCloud}
-            title="Powered by the Cloud"
-            content="Your software solutions will be engineered and deployed in a safe and secured industrial-grade cloud database with high speed accessibility."
-          />
-        </div>
-
-        {/* Feature Banner */}
-        <div className="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 mt-10">
-          <div className="py-8 sm:py-12 md:py-16 lg:py-12 flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 text-center md:text-left md:pr-8">
-              <h4 className="text-dark uppercase font-semibold mb-2 text-sm sm:text-base">
-                Scale your Business with full control
-              </h4>
-              <h2 className="font-semibold mb-3 text-2xl sm:text-3xl md:text-4xl">
-                Innovative Software Solutions to Future-Proof Your Business
-              </h2>
-
-              <p className="text-dark text-sm sm:text-base md:text-lg mb-4">
-                At Graminate, we are a multidisciplinary team of highly skilled
-                software developers and leaders, united by a vision to deliver
-                top-tier, affordable, and scalable software solutions that
-                transform your business for today and tomorrow.
-              </p>
-              <div className="flex justify-center md:justify-start">
-                <Button style="home" text="View More" />
-              </div>
-            </div>
-            <div className="mt-6 md:mt-0 md:ml-4 flex justify-center">
-              <Image
-                src={FeatureBanner}
-                alt="Feature Banner"
-                className="w-60 h-60 md:w-80 md:h-80"
+        {/* Glimpse of Services - Adjusted Negative Margin, Standard Padding */}
+        <div className="relative py-16 sm:py-20 lg:py-24 bg-white">
+          {/* Cards container with negative margin */}
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-36 sm:-mt-40">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <Services
+                icon={faBuilding}
+                title="Solutions for All Businesses"
+                content="Robust software solutions across modern industries, fully customised, safe, and secured under your control." // Slightly shortened
+              />
+              <Services
+                icon={faCode}
+                title="Robust Planning & Development"
+                content="A dedicated team efficiently builds your fault-proof, high-performance software solutions based on your interests." // Slightly shortened
+              />
+              <Services
+                icon={faCloud}
+                title="Powered by the Cloud"
+                content="Engineered and deployed in a secure, industrial-grade cloud database with high-speed accessibility." // Slightly shortened
               />
             </div>
           </div>
         </div>
 
-        {/* Onboarding Process */}
-        <div className="container mx-auto px-4 sm:px-8 md:px-10 py-10">
-          <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3">
-              How We Approach Projects
-            </h2>
-            <p className="text-dark text-sm sm:text-base md:text-lg max-w-lg mx-auto mb-6">
-              We ensure
-              complete transparency and adherence to deadline while developing
-              your product
-            </p>
+        {/* Feature Banner - Added Background, Improved Spacing, Typography */}
+        <div className="bg-gray-50 py-16 sm:py-20 lg:py-24 overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+              <div className="lg:w-1/2 text-center lg:text-left">
+                <h4 className="text-base font-semibold text-green-600 uppercase tracking-wide">
+                  Scale with Control
+                </h4>
+                <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+                  Innovative Software to Future-Proof Your Business
+                </h2>
+                <p className="mt-4 text-lg text-gray-600">
+                  At Graminate, our multidisciplinary team delivers top-tier,
+                  affordable, and scalable software solutions, transforming your
+                  business for today and tomorrow.
+                </p>
+                <div className="mt-8 flex justify-center lg:justify-start">
+                  <Button
+                    style="home"
+                    text="Learn More"
+                    onClick={() => navigateTo("/about")}
+                  />
+                </div>
+              </div>
+              <div className="lg:w-1/2 flex justify-center items-center mt-10 lg:mt-0">
+                <Image
+                  src={FeatureBannerImage}
+                  alt="Feature Banner showcasing software development process"
+                  className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 object-contain rounded-lg"
+                  width={500}
+                  height={500}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-            {/* Desktop View */}
-            <div className="hidden md:flex justify-center space-x-8 lg:space-x-16 mt-6">
+        {/* How We Approach Projects Section */}
+        <div className="bg-neutral-100 py-16 sm:py-20 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+                How We Approach Projects
+              </h2>
+              <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                We ensure complete transparency and adherence to deadlines while
+                developing your product through a structured process.
+              </p>
+            </div>
+
+            {/* Desktop Steps */}
+            <div className="hidden md:flex justify-center items-start mt-12 lg:mt-16 space-x-6 lg:space-x-10">
               {steps.map((step, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center text-center p-4"
+                  className="flex flex-col items-center text-center p-4 max-w-[240px] group"
                 >
-                  <div className="w-20 h-20 shadow-lg bg-white rounded-full flex items-center justify-center">
+                  <div className="w-24 h-24 mb-4 shadow-lg bg-white rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:scale-105">
                     <FontAwesomeIcon
                       icon={step.icon}
-                      className="text-green-200 text-3xl"
+                      className="text-green-500 text-4xl"
                     />
                   </div>
-                  <h5 className="text-md sm:text-xl mt-4">
+                  <h5 className="text-lg font-semibold text-gray-900 mt-4">
                     {step.step}. {step.title}
                   </h5>
-                  <p className="text-dark text-sm sm:text-base mt-2">
+                  <p className="text-gray-600 text-sm mt-2">
                     {step.description}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Mobile View */}
-            <div className="md:hidden relative flex items-center justify-center mt-6">
-              {currentStep > 0 && (
-                <FontAwesomeIcon
+            {/* Mobile Slider */}
+            <div className="md:hidden relative mt-12 px-8">
+              <div className="relative flex items-center justify-center">
+                <button
                   onClick={prevStep}
-                  icon={faChevronCircleLeft}
-                  className="absolute left-0 text-gray-400 rounded-full text-3xl sm:text-4xl cursor-pointer"
-                />
-              )}
-              <div className="text-center p-4 flex flex-col items-center">
-                <div className="w-16 h-16 shadow-lg bg-white rounded-full flex items-center justify-center">
+                  disabled={currentStep === 0}
+                  className={`absolute left-0 -translate-x-full p-2 text-gray-500 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 z-10`}
+                  aria-label="Previous Step"
+                >
                   <FontAwesomeIcon
-                    icon={steps[currentStep].icon}
-                    className="text-green-200 text-xl"
+                    icon={faChevronCircleLeft}
+                    className="text-4xl sm:text-5xl"
                   />
-                </div>
-                <h5 className="text-lg font-semibold mt-4">
-                  {steps[currentStep].title}
-                </h5>
-                <p className="text-dark text-sm mt-2">
-                  {steps[currentStep].description}
-                </p>
-              </div>
-              {currentStep < steps.length - 1 && (
-                <FontAwesomeIcon
-                  onClick={nextStep}
-                  icon={faChevronCircleRight}
-                  className="absolute right-0 text-gray-400 rounded-full text-3xl sm:text-4xl cursor-pointer"
-                />
-              )}
-            </div>
+                </button>
 
-            {/* Jumbotron Section */}
-            <div className="container mx-auto px-4 sm:px-8 md:px-10 py-10 flex flex-col md:flex-row items-center">
-              <div className="w-full md:w-1/2">
-                <Image
-                  className="w-full h-auto md:h-[25vw] object-cover rounded"
-                  src={"/images/company/workstation.jpg"}
-                  alt="Jumbotron Background"
-                  width={1000}
-                  height={1000}
-                />
-              </div>
+                <div className="text-center px-4 py-4 w-full max-w-xs mx-auto flex flex-col items-center">
+                  <div className="w-20 h-20 mb-4 shadow-lg bg-white rounded-full flex items-center justify-center">
+                    <FontAwesomeIcon
+                      icon={steps[currentStep].icon}
+                      className="text-green-500 text-3xl"
+                    />
+                  </div>
 
-              <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-5">
-                <div className="bg-white rounded shadow-lg py-6 px-4">
-                  <p className="text-green-200 text-sm sm:text-base text-center font-semibold uppercase">
-                    What we do
-                  </p>
-                  <h5 className="text-black text-xl sm:text-2xl text-center font-semibold my-3">
-                    Code the Future, Today – Where Innovation Meets Precision in
-                    Software Development.
+                  <h5 className="text-xl font-semibold mt-4 text-gray-900">
+                    {steps[currentStep].title}
                   </h5>
-                  <p className="text-dark text-sm sm:text-base text-center max-w-md mx-auto">
-                    At Graminate, we transform ideas into innovative software
-                    solutions that drive growth and efficiency. From sleek
-                    mobile apps to robust enterprise systems, we craft code that
-                    powers your vision. Let’s build the future, one line at a
-                    time.
+
+                  <p className="text-gray-600 text-base mt-2">
+                    {steps[currentStep].description}
                   </p>
-                  <div className="flex justify-center mt-4">
-                    <Button style="home" text="View More" />
+                </div>
+
+                <button
+                  onClick={nextStep}
+                  disabled={currentStep === steps.length - 1}
+                  className={`absolute right-0 translate-x-full p-2 text-gray-500 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 z-10`}
+                  aria-label="Next Step"
+                >
+                  <FontAwesomeIcon
+                    icon={faChevronCircleRight}
+                    className="text-4xl sm:text-5xl"
+                  />
+                </button>
+              </div>
+
+              {/* Mobile Dots */}
+              <div className="flex justify-center space-x-2 mt-6">
+                {steps.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentStep(index)}
+                    className={`w-3 h-3 rounded-full ${
+                      currentStep === index
+                        ? "bg-green-500"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    } transition-colors duration-300`}
+                    aria-label={`Go to step ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* What We Do Section */}
+        <div className="bg-white py-16 sm:py-20 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+              {/* Image Column */}
+              <div className="w-full lg:w-1/2">
+                <Image
+                  className="w-full h-auto max-h-[450px] object-cover rounded-lg shadow-lg"
+                  src={"/services/tc_design_consulting.png"}
+                  alt="Modern software development workstation"
+                  width={800}
+                  height={600}
+                />
+              </div>
+
+              <div className="w-full lg:w-1/2">
+                <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8">
+                  <p className="text-green-600 text-sm font-semibold uppercase tracking-wide text-center lg:text-left">
+                    What We Do
+                  </p>
+                  <h5 className="text-gray-900 text-2xl sm:text-3xl font-bold my-3 text-center lg:text-left">
+                    Code the Future, Today
+                  </h5>
+                  <p className="text-gray-600 text-base sm:text-lg mt-4 text-center lg:text-left">
+                    At Graminate, we transform ideas into innovative software
+                    solutions driving growth and efficiency. From sleek mobile
+                    apps to robust enterprise systems, we craft code that powers
+                    your vision. Let’s build the future, one line at a time.
+                  </p>
+                  <div className="flex justify-center lg:justify-start mt-8">
+                    <Button
+                      style="home"
+                      text="Explore Services"
+                      onClick={() => navigateTo("/services")}
+                    />
                   </div>
                 </div>
               </div>

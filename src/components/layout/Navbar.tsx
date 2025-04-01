@@ -315,18 +315,19 @@ const Navbar = ({
                     </h3>
                     <ul className="mt-2 space-y-1 text-left">
                       <li>
-                        <Link href="/services/tech_consulting#it_strategy">
-                          IT Strategy & Architecture
-                        </Link>
-                      </li>
-                      <li>
                         <Link href="/services/tech_consulting#project_management">
                           Project Managmenent
                         </Link>
                       </li>
                       <li>
-                        <Link href="/services/tech_consulting#design_consulting">
-                          Design Consulting
+                        <Link href="/services/tech_consulting#technical_debt">
+                          Technical Debt Remediation
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link href="/services/tech_consulting#application_modernization">
+                          Software Modernization
                         </Link>
                       </li>
                     </ul>
@@ -558,18 +559,19 @@ const Navbar = ({
             </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
-                <Link href="/services/tech_consulting#it_strategy">
-                  IT Strategy & Architecture
-                </Link>
-              </li>
-              <li>
                 <Link href="/services/tech_consulting#project_management">
                   Project Managmenent
                 </Link>
               </li>
               <li>
-                <Link href="/services/tech_consulting#design_consulting">
-                  Design Consulting
+                <Link href="/services/tech_consulting#technical_debt">
+                  Technical Debt Remediation
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/services/tech_consulting#application_modernization">
+                  Software Modernization
                 </Link>
               </li>
             </ul>
