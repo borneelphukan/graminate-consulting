@@ -1,9 +1,205 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Banner from "./Banner";
 import { Transition } from "@headlessui/react";
+
+type NavLink = {
+  label: string;
+  href: string;
+};
+
+type NavSection = {
+  title: string;
+  path: string;
+  links: NavLink[];
+};
+
+const SERVICES_NAV_DATA: NavSection[] = [
+  {
+    title: "Software Development",
+    path: "/services/software_development",
+    links: [
+      {
+        label: "Web Applications",
+        href: "/services/software_development#web-application",
+      },
+      {
+        label: "Enterprise Softwares",
+        href: "/services/software_development#enterprise-application",
+      },
+      {
+        label: "Mobile Applications",
+        href: "/services/software_development#mobile-application",
+      },
+      {
+        label: "Cloud Applications",
+        href: "/services/software_development#cloud-application",
+      },
+    ],
+  },
+  {
+    title: "Product Design",
+    path: "/services/product_design",
+    links: [
+      { label: "UI/UX Design", href: "/services/product_design#uiux_design" },
+      { label: "Web Design", href: "/services/product_design#web_design" },
+      {
+        label: "Computer-Aided Design (CAD)",
+        href: "/services/product_design#cad",
+      },
+    ],
+  },
+  {
+    title: "IT Operations",
+    path: "/services/it_operations",
+    links: [
+      {
+        label: "Integration & Automations",
+        href: "/services/it_operations#integration_automation",
+      },
+      {
+        label: "Monitor & Logging",
+        href: "/services/it_operations#monitoring_logging",
+      },
+      {
+        label: "Cloud & Infrastructure Management",
+        href: "/services/it_operations#cloud",
+      },
+    ],
+  },
+  {
+    title: "Technology Consulting",
+    path: "/services/tech_consulting",
+    links: [
+      {
+        label: "Project Managmenent",
+        href: "/services/tech_consulting#project_management",
+      },
+      {
+        label: "Technical Debt Remediation",
+        href: "/services/tech_consulting#technical_debt",
+      },
+      {
+        label: "Software Modernization",
+        href: "/services/tech_consulting#application_modernization",
+      },
+    ],
+  },
+];
+
+const INDUSTRIES_NAV_DATA: NavSection[] = [
+  {
+    title: "Enterprise",
+    path: "/industries/enterprise",
+    links: [
+      {
+        label: "Enterprise Resource Planning (ERP)",
+        href: "/industries/enterprise#erp",
+      },
+      {
+        label: "Customer Relationship Management (CRM)",
+        href: "/industries/enterprise#crm",
+      },
+      {
+        label: "E-Commerce Platforms",
+        href: "/industries/enterprise#e-commerce",
+      },
+      { label: "Other SaaS Platforms", href: "/industries/enterprise#saas" },
+    ],
+  },
+  {
+    title: "Health Care",
+    path: "/industries/healthcare",
+    links: [
+      {
+        label: "Fitness & Nutrition",
+        href: "/industries/healthcare#fitness_nutrition",
+      },
+      {
+        label: "Clinical, e-Pharma & Hospital IT Systems",
+        href: "/industries/healthcare#clinical-systems",
+      },
+      {
+        label: "Softwares for Doctors",
+        href: "/industries/healthcare#doctor_softwares",
+      },
+    ],
+  },
+  {
+    title: "Finance",
+    path: "/industries/finance",
+    links: [
+      {
+        label: "Investment & Trading Platforms",
+        href: "/industries/finance#investment_trading",
+      },
+      { label: "Insurance Platforms", href: "/industries/finance#insurance" },
+      {
+        label: "Personal Finance & Budgeting",
+        href: "/industries/finance#personal_finance",
+      },
+    ],
+  },
+  {
+    title: "Education",
+    path: "/industries/education",
+    links: [
+      {
+        label: "Institutional Management Systems",
+        href: "/industries/education#institution-management",
+      },
+      {
+        label: "Learning & Teaching Platforms",
+        href: "/industries/education#learning_teaching",
+      },
+      {
+        label: "Exam Preparation Platforms",
+        href: "/industries/education#exam-platforms",
+      },
+    ],
+  },
+  {
+    title: "Public Sector",
+    path: "/industries/public_sector",
+    links: [
+      { label: "e-Governance", href: "/industries/public_sector#e-governance" },
+      {
+        label: "Mobility Platforms",
+        href: "/industries/public_sector#mobility",
+      },
+      {
+        label: "Infrastructure & Urban Development",
+        href: "/industries/public_sector#urban",
+      },
+    ],
+  },
+];
+
+const MAIN_NAV_ITEMS: {
+  label: string;
+  path: string;
+  bannerKey?: string;
+  data?: NavSection[];
+}[] = [
+  {
+    label: "Services",
+    path: "/services",
+    bannerKey: "services",
+    data: SERVICES_NAV_DATA,
+  },
+  {
+    label: "Industries",
+    path: "/industries",
+    bannerKey: "industries",
+    data: INDUSTRIES_NAV_DATA,
+  },
+  { label: "About Us", path: "/company/about_us" },
+  { label: "Careers", path: "/company/career" },
+];
+
+type BannerKey = (typeof MAIN_NAV_ITEMS)[number]["bannerKey"] | null;
 
 type Props = {
   imageSrc?: string;
@@ -17,73 +213,113 @@ const Navbar = ({
   contact = false,
 }: Props) => {
   const router = useRouter();
+  const navbarRef = useRef<HTMLElement>(null);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setServicesOpen] = useState(false);
-  const [isIndustriesOpen, setIndustriesOpen] = useState(false);
-  const [showServiceBanner, setShowServiceBanner] = useState(false);
-  const [showIndustriesBanner, setShowIndustriesBanner] = useState(false);
-  const [showProductsBanner, setShowProductsBanner] = useState(false);
+  const [activeBanner, setActiveBanner] = useState<BannerKey>(null);
+  type MobileDropdownKey = NonNullable<BannerKey>;
 
-  const handleBannerToggle = (
-    banner: "services" | "industries" | "products"
-  ) => {
-    if (banner === "services") {
-      setShowServiceBanner(true);
-      setShowIndustriesBanner(false);
-      setShowProductsBanner(false);
-    } else if (banner === "industries") {
-      setShowServiceBanner(false);
-      setShowIndustriesBanner(true);
-      setShowProductsBanner(false);
-    } else if (banner === "products") {
-      setShowServiceBanner(false);
-      setShowIndustriesBanner(false);
-      setShowProductsBanner(true);
-    }
+  const [openMobileDropdown, setOpenMobileDropdown] =
+    useState<MobileDropdownKey | null>(null);
+
+  const handleBannerToggle = (bannerKey: BannerKey) => {
+    setActiveBanner(bannerKey);
   };
 
-  useEffect(() => {}, [router.locale]);
+  const closeBannersAndMenu = () => {
+    setActiveBanner(null);
+    setOpenMobileDropdown(null);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      if (showServiceBanner || showIndustriesBanner || showProductsBanner) {
-        setShowServiceBanner(false);
-        setShowIndustriesBanner(false);
-        setShowProductsBanner(false);
+      if (activeBanner) {
+        setActiveBanner(null);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [showServiceBanner, showIndustriesBanner, showProductsBanner]);
+  }, [activeBanner]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const navbar = document.getElementById("main-navbar");
-      if (navbar && !navbar.contains(event.target as Node)) {
-        setShowServiceBanner(false);
-        setShowIndustriesBanner(false);
-        setShowProductsBanner(false);
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target as Node)
+      ) {
+        setActiveBanner(null);
       }
     };
-
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setOpenMobileDropdown(null);
+      setActiveBanner(null);
+    }
+  }, [isMobileMenuOpen]);
+
   const navigateTo = (route: string) => {
+    closeBannersAndMenu();
     router.push(route);
   };
 
+  const handleMobileDropdownToggle = (key: MobileDropdownKey) => {
+    setOpenMobileDropdown((prev) => (prev === key ? null : key));
+  };
+
+  const renderNavContent = (
+    sections: NavSection[],
+    isMobile: boolean = false
+  ) =>
+    sections.map((section) => (
+      <div key={section.title}>
+        <h3
+          className={`font-semibold uppercase ${
+            isMobile ? "text-green-200 text-left mt-4" : "text-green-200"
+          }`}
+        >
+          <Link href={section.path} onClick={closeBannersAndMenu}>
+            {section.title}
+          </Link>
+        </h3>
+        <ul
+          className={`mt-2 space-y-${isMobile ? "1" : "2"} text-sm ${
+            isMobile ? "text-left" : ""
+          }`}
+        >
+          {section.links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={closeBannersAndMenu}
+                className="hover:text-gray-300"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ));
+
   return (
     <>
-      <header id="main-navbar" className="bg-gray-800 py-2 z-50 relative">
+      <header
+        ref={navbarRef}
+        id="main-navbar"
+        className="bg-gray-800 py-2 z-50 relative"
+      >
         <div className="mx-auto max-w-7xl px-4">
           <div className="relative flex h-12 items-center justify-between py-1">
-            {/* Logo Section */}
             <div className="flex items-center">
-              <Link href="/" className="flex flex-row items-center gap-4">
+              <Link
+                href="/"
+                className="flex flex-row items-center gap-4"
+                onClick={closeBannersAndMenu}
+              >
                 <Image
                   src={imageSrc}
                   alt="Graminate Logo"
@@ -96,59 +332,38 @@ const Navbar = ({
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
             <nav className="hidden space-x-6 md:flex">
-              <div
-                onMouseEnter={() => handleBannerToggle("services")}
-                className="relative"
-                onClick={() => {
-                  navigateTo("/services");
-                }}
-              >
-                <button className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none">
-                  Services
-                </button>
-              </div>
-
-              <div
-                onMouseEnter={() => handleBannerToggle("industries")}
-                className="relative"
-                onClick={() => {
-                  navigateTo("/industries");
-                }}
-              >
-                <button className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none">
-                  Industries
-                </button>
-              </div>
-
-              <Link
-                href="/company/about_us"
-                className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none"
-                onMouseEnter={() => {
-                  setShowServiceBanner(false);
-                  setShowIndustriesBanner(false);
-                  setShowProductsBanner(false);
-                }}
-              >
-                About Us
-              </Link>
-
-              <Link
-                href="/company/career"
-                className="relative"
-                onMouseEnter={() => {
-                  setShowServiceBanner(false);
-                  setShowIndustriesBanner(false);
-                  setShowProductsBanner(false);
-                }}
-              >
-                <button className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none">
-                  Careers
-                </button>
-              </Link>
+              {MAIN_NAV_ITEMS.map((item) => (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() =>
+                    item.bannerKey
+                      ? handleBannerToggle(item.bannerKey)
+                      : setActiveBanner(null)
+                  }
+                  onClick={
+                    item.bannerKey ? () => navigateTo(item.path) : undefined
+                  }
+                >
+                  {item.bannerKey ? (
+                    <button className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none">
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.path}
+                      className="text-sm text-white my-auto hover:text-gray-300 focus:outline-none"
+                      onClick={closeBannersAndMenu}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
             </nav>
 
+            {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 md:hidden">
               <button
                 className="text-white focus:outline-none"
@@ -188,23 +403,23 @@ const Navbar = ({
               </button>
             </div>
 
-            {/* Right Section */}
             <div className="hidden items-center gap-4 md:flex">
               {signIn && (
                 <Link
                   href="/localhost:3000/"
                   className="text-sm whitespace-nowrap text-white hover:text-gray-300"
+                  onClick={closeBannersAndMenu}
                 >
                   Sign In
                 </Link>
               )}
               {!signIn && contact && (
-                <div
-                  className="bg-green-200 text-sm text-white my-10 py-1.5 px-6 rounded-md hover:bg-green-100 cursor-pointer"
+                <button
+                  className="bg-green-200 text-sm text-white my-10 py-1.5 px-6 rounded-md hover:bg-green-100 cursor-pointer" // Added button tag for semantics
                   onClick={() => navigateTo("/company/contact_us")}
                 >
                   Request Service
-                </div>
+                </button>
               )}
             </div>
           </div>
@@ -224,470 +439,83 @@ const Navbar = ({
                 <Link
                   href="/sign_in"
                   className="block border-b border-gray-300 p-2 hover:text-gray-300"
+                  onClick={closeBannersAndMenu}
                 >
                   Sign In
                 </Link>
               )}
 
-              {/* Services Dropdown */}
-              <div>
-                <button
-                  className="block w-full border-b border-gray-300 p-2 text-center hover:text-gray-300"
-                  onClick={() => {
-                    setServicesOpen(!isServicesOpen);
-                    setIndustriesOpen(false);
-                  }}
-                >
-                  Services
-                </button>
-                {isServicesOpen && (
-                  <div className="mt-2 bg-gray-800 p-4 rounded">
-                    <h3 className="text-green-200 font-semibold uppercase text-left">
-                      Software Development
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/services/software_development#web-application">
-                          Web Applications
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/software_development#enterprise-application">
-                          Enterprise Softwares
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/software_development#mobile-application">
-                          Mobile Applications
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/software_development#cloud-application">
-                          Cloud Applications
-                        </Link>
-                      </li>
-                    </ul>
-
-                    <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase text-left mt-4">
-                      Product Design
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/services/product_design#uiux_design">
-                          UI/UX Design
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/product_design#web_design">
-                          Web Design
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/product_design#cad">
-                          Computer-Aided Design (CAD)
-                        </Link>
-                      </li>
-                    </ul>
-
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      IT Solutions
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/services/it_operations#integration_automation">
-                          Integration & Automations
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/it_operations#monitoring_logging">
-                          Monitor & Logging
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/it_operations#cloud">
-                          Cloud & Infrastructure Management
-                        </Link>
-                      </li>
-                    </ul>
-
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Technology Consulting
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/services/tech_consulting#project_management">
-                          Project Managmenent
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/services/tech_consulting#technical_debt">
-                          Technical Debt Remediation
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link href="/services/tech_consulting#application_modernization">
-                          Software Modernization
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Industries Dropdown */}
-              <div>
-                <button
-                  className="block w-full border-b border-gray-300 p-2 text-center hover:text-gray-300"
-                  onClick={() => {
-                    setIndustriesOpen(!isIndustriesOpen);
-                    setServicesOpen(false);
-                  }}
-                >
-                  Industries
-                </button>
-                {isIndustriesOpen && (
-                  <div className="mt-2 bg-gray-700 p-4 rounded">
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      <Link href="/industries/enterprise">Enterprise</Link>
-                    </h3>
-
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/industries/enterprise#erp">
-                          Enterprise Resource Planning (ERP)
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/enterprise#crm">
-                          Customer Relationship Management (CRM)
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/enterprise#e-commerce">
-                          E-Commerce Platforms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/enterprise#saas">
-                          Other SaaS Platforms
-                        </Link>
-                      </li>
-                    </ul>
-                    <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase text-left mt-4">
-                      Health Care
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="#">Fitness & Nutrition</Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          Clinical, Pharmaceutical & Hospital Management
-                          Platforms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">Softwares for Doctors</Link>
-                      </li>
-                    </ul>
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      <Link href="/industries/finance">Finance</Link>
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/industries/finance#investment_trading">
-                          Investment & Trading Platforms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/finance#insurance">
-                          Insurance Platforms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/finance#personal_finance">
-                          Personal Finance & Budgeting
-                        </Link>
-                      </li>
-                    </ul>
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      <Link href="/industries/education">Education</Link>
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="/industries/education#institution-management">
-                          Institutional Management Systems
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/education#learning_teaching">
-                          Learning & Teaching Platforms
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/industries/education#exam-platforms">
-                          {" "}
-                          Exam Preparation Platforms
-                        </Link>
-                      </li>
-                    </ul>
-                    <h3 className="text-green-200 font-semibold uppercase text-left mt-4">
-                      Public Sector
-                    </h3>
-                    <ul className="mt-2 space-y-1 text-left">
-                      <li>
-                        <Link href="#">e-Governance</Link>
-                      </li>
-                      <li>
-                        <Link href="#">Mobility Platforms</Link>
-                      </li>
-                      <li>
-                        <Link href="#"> Stock Trading Platforms</Link>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <Link
-                href="/company/about_us"
-                className="block border-b border-gray-300 p-2 hover:text-gray-300"
-              >
-                About Us
-              </Link>
-
-              <Link
-                href="/company/career"
-                className="block border-b border-gray-300 p-2 hover:text-gray-300"
-              >
-                Career
-              </Link>
+              {MAIN_NAV_ITEMS.map((item) => {
+                if (item.bannerKey && item.data) {
+                  const key = item.bannerKey as MobileDropdownKey;
+                  const isOpen = openMobileDropdown === key;
+                  return (
+                    <div key={item.label}>
+                      <button
+                        className="block w-full border-b border-gray-300 p-2 text-center hover:text-gray-300"
+                        onClick={() => handleMobileDropdownToggle(key)}
+                      >
+                        {item.label}
+                      </button>
+                      {isOpen && (
+                        <div className="mt-2 bg-gray-700 p-4 rounded">
+                          {renderNavContent(item.data, true)}
+                        </div>
+                      )}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.path}
+                      className="block border-b border-gray-300 p-2 hover:text-gray-300"
+                      onClick={closeBannersAndMenu}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+              })}
 
               {!signIn && contact && (
-                <div className="bg-green-200 font-semibold text-sm text-white py-2 px-6 rounded-md hover:bg-green-100 cursor-pointer">
+                <button
+                  className="mt-4 bg-green-200 font-semibold text-sm text-white py-2 px-6 rounded-md hover:bg-green-100 cursor-pointer w-auto inline-block" // Use w-auto inline-block for centering
+                  onClick={() => navigateTo("/company/contact_us")}
+                >
                   Request Service
-                </div>
+                </button>
               )}
             </div>
           </Transition>
         </div>
       </header>
 
-      {/* Banners */}
-      <Banner
-        isVisible={showServiceBanner}
-        borderColorClass="border-t border-red-300"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-800">
-          <div>
-            <h3 className="text-green-200 font-semibold uppercase">
-              <Link href="/services/software_development">
-                Software Development
-              </Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/services/software_development#web-application">
-                  Web Applications
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/software_development#enterprise-application">
-                  Enterprise Softwares
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/software_development#mobile-application">
-                  Mobile Applications
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/software_development#cloud-application">
-                  Cloud Applications
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 font-semibold uppercase">
-              <Link href="/services/product_design">Product Design</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/services/product_design#uiux_design">
-                  UI/UX Design
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/product_design#web_design">
-                  Web Design
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/product_design#cad">
-                  Computer-Aided Design (CAD)
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 font-semibold uppercase">
-              <Link href="/services/it_operations">IT Operations</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/services/it_operations#integration_automation">
-                  Integration & Automations
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/it_operations#monitoring_logging">
-                  Monitor & Logging
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/it_operations#cloud">
-                  Cloud & Infrastructure Management
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 font-semibold uppercase">
-              <Link href="/services/tech_consulting">Tech Consulting</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/services/tech_consulting#project_management">
-                  Project Managmenent
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/tech_consulting#technical_debt">
-                  Technical Debt Remediation
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/services/tech_consulting#application_modernization">
-                  Software Modernization
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Banner>
-
-      <Banner isVisible={showIndustriesBanner}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-800">
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              <Link href="/industries/enterprise">Enterprise</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/industries/enterprise#erp">
-                  Enterprise Resource Planning (ERP)
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/enterprise#crm">
-                  Customer Relationship Management (CRM)
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/enterprise#saas">
-                  Other SaaS Platform
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              <Link href="/industries/healthcare">Health Care</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/industries/healthcare#fitness_nutrition">
-                  Fitness & Nutrition
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/healthcare#clinical-systems">
-                  Clinical, Pharma & Hospital Platforms
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/healthcare#doctor_softwares">
-                  Softwares for Doctors
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              <Link href="/industries/finance">Finance</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/industries/finance#investment_trading">
-                  Investment & Trading Platforms
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/finance#insurance">
-                  Insurance Platforms
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/finance#personal_finance">
-                  Personal Finance & Budgeting
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              <Link href="/industries/education">Education</Link>
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="/industries/education#institution-management">
-                  Institutional Management System
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/education#learning_teaching">
-                  Learning & Teaching Platforms
-                </Link>
-              </li>
-              <li>
-                <Link href="/industries/education#exam-platforms">
-                  Exam Preparation Platforms
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-green-200 hover:text-green-100 font-semibold uppercase">
-              Public Sector
-            </h3>
-            <ul className="mt-2 space-y-2 text-sm">
-              <li>
-                <Link href="#">e-Governance</Link>
-              </li>
-              <li>
-                <Link href="#">Mobility Platforms</Link>
-              </li>
-              <li>
-                <Link href="#">Infrastructure & Urban Development</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Banner>
+      {MAIN_NAV_ITEMS.map(
+        (item) =>
+          item.bannerKey &&
+          item.data && (
+            <Banner
+              key={`${item.bannerKey}-banner`}
+              isVisible={activeBanner === item.bannerKey}
+              borderColorClass={
+                item.bannerKey === "services"
+                  ? "border-t border-red-300"
+                  : undefined
+              }
+            >
+              <div
+                className={`grid grid-cols-1 ${
+                  item.bannerKey === "industries"
+                    ? "md:grid-cols-3"
+                    : "md:grid-cols-4"
+                } gap-8 text-gray-800`}
+              >
+                {renderNavContent(item.data)}
+              </div>
+            </Banner>
+          )
+      )}
     </>
   );
 };

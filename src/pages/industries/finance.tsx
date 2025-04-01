@@ -4,7 +4,7 @@ import CoverSection from "@/components/sections/ServiceCover";
 import ContentSection from "@/components/sections/ServiceContent";
 
 export default function Finance() {
-  const coverImage = "/industries/en-enterprise.png";
+  const coverImage = "/industries/ft_cover.png";
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function Finance() {
           <div className="max-w-5xl mx-auto space-y-16">
             <div id="investment_trading">
               <ContentSection
-                imageSrc="/industries/fi_.png"
+                imageSrc="/industries/ft_trading.png"
                 alt="Investment & Trading Platforms"
                 title="Investment & Trading Platforms"
                 paragraphs={[
@@ -42,7 +42,7 @@ export default function Finance() {
 
             <div id="insurance">
               <ContentSection
-                imageSrc="/industries/fi_.png"
+                imageSrc="/industries/ft_insurance.png"
                 alt="Insurance Platforms"
                 title="Insurance Platforms"
                 paragraphs={[
@@ -62,7 +62,7 @@ export default function Finance() {
 
             <div id="personal_finance">
               <ContentSection
-                imageSrc="/industries/fi_.png"
+                imageSrc="/industries/ft_personal.png"
                 alt="Personal Finance & Budgeting"
                 title="Personal Finance & Budgeting"
                 paragraphs={[
